@@ -1,4 +1,4 @@
-# SkillMarket_AP_2026
+# DE_Project_2026
 # SkillMarket – A Micro-Services Marketplace & Skill Exchange Platform
 
 **SkillMarket** is a platform that empowers students, beginners, and independent creators to monetize their skills, exchange knowledge, and collaborate on real-world projects. It brings together people who want to offer services, learn new skills, or find collaborators, all in one place.
