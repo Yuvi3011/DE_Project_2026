@@ -1,0 +1,11 @@
+{
+  "team_number": "T0148",
+  "group_lead": { "name": "Yuvraj Babbar", "enrollment_no": "2501010539", "github": "Yuvi3011" },
+  "members": [
+    { "name": "Samriddhi", "enrollment_no": "22501010403", "github": "Samridh2010" },
+    { "name": "Vansh Grover", "enrollment_no": "2501010493", "github": "vanshg25493-afk" },
+    { "name": "Udhav Munish Sehgal", "enrollment_no": "2501010595", "github": "munishudhav" }
+  ],
+  "postgres_version": "",
+  "laptop_used_for_benchmarks": ""
+}
