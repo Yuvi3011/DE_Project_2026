@@ -22,12 +22,12 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Yuvraj Babbar | 2501010539 | Yuvi3011 |
+| Member 2 | Samriddhi | 2501010403 | Samridh2010 |
+| Member 3 | Vansh Grover | 2501010493 | vanshg25493-afk |
+| Member 4 | Udhav Munish Sehgal| 2501010595 | munishudhav |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** T0148 · **Section:** E · **Repository URL:** https://github.com/Yuvi3011/DE_Project_2026
 
 ---
 
