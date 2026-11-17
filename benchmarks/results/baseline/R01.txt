@@ -1,0 +1,138 @@
+=== R01 run 1 ===
+Limit  (cost=6849.40..6849.42 rows=10 width=27) (actual time=24.067..25.185 rows=10 loops=1)
+  Buffers: shared hit=3573 dirtied=1
+  ->  Sort  (cost=6849.40..6849.48 rows=34 width=27) (actual time=24.066..25.183 rows=10 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3573 dirtied=1
+        ->  Finalize GroupAggregate  (cost=6845.62..6848.66 rows=34 width=27) (actual time=23.797..24.940 rows=28 loops=1)
+              Group Key: t.track_id
+              Buffers: shared hit=3570 dirtied=1
+              ->  Gather Merge  (cost=6845.62..6848.22 rows=20 width=27) (actual time=23.794..24.932 rows=32 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=3570 dirtied=1
+                    ->  Partial GroupAggregate  (cost=5845.61..5845.96 rows=20 width=27) (actual time=18.665..18.670 rows=16 loops=2)
+                          Group Key: t.track_id
+                          Buffers: shared hit=3570 dirtied=1
+                          ->  Sort  (cost=5845.61..5845.66 rows=20 width=19) (actual time=18.411..18.412 rows=20 loops=2)
+                                Sort Key: t.track_id
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=3570 dirtied=1
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Nested Loop  (cost=1400.11..5845.18 rows=20 width=19) (actual time=17.234..18.390 rows=20 loops=2)
+                                      Join Filter: (ta.track_id = t.track_id)
+                                      Buffers: shared hit=3563 dirtied=1
+                                      ->  Hash Join  (cost=1399.81..5833.24 rows=20 width=8) (actual time=17.204..18.263 rows=20 loops=2)
+                                            Hash Cond: (s.track_id = ta.track_id)
+                                            Buffers: shared hit=3445 dirtied=1
+                                            ->  Parallel Seq Scan on streams s  (cost=0.00..4414.24 rows=7312 width=4) (actual time=13.910..14.679 rows=6410 loops=2)
+                                                  Filter: (started_at >= '2026-06-03 00:00:00+05:30'::timestamp with time zone)
+                                                  Rows Removed by Filter: 118590
+                                                  Buffers: shared hit=2576 dirtied=1
+                                            ->  Hash  (cost=1397.61..1397.61 rows=176 width=4) (actual time=3.207..3.207 rows=160 loops=2)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 14kB
+                                                  Buffers: shared hit=858
+                                                  ->  Seq Scan on track_artists ta  (cost=0.00..1397.61 rows=176 width=4) (actual time=0.069..3.187 rows=160 loops=2)
+                                                        Filter: (artist_id = 33)
+                                                        Rows Removed by Filter: 77329
+                                                        Buffers: shared hit=858
+                                      ->  Index Scan using pk_tracks on tracks t  (cost=0.29..0.58 rows=1 width=19) (actual time=0.006..0.006 rows=1 loops=39)
+                                            Index Cond: (track_id = s.track_id)
+                                            Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=235
+Planning Time: 5.475 ms
+Execution Time: 25.700 ms
+=== R01 run 2 ===
+Limit  (cost=6849.40..6849.42 rows=10 width=27) (actual time=13.293..14.213 rows=10 loops=1)
+  Buffers: shared hit=3573
+  ->  Sort  (cost=6849.40..6849.48 rows=34 width=27) (actual time=13.292..14.211 rows=10 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3573
+        ->  Finalize GroupAggregate  (cost=6845.62..6848.66 rows=34 width=27) (actual time=13.251..14.196 rows=28 loops=1)
+              Group Key: t.track_id
+              Buffers: shared hit=3570
+              ->  Gather Merge  (cost=6845.62..6848.22 rows=20 width=27) (actual time=13.247..14.172 rows=30 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=3570
+                    ->  Partial GroupAggregate  (cost=5845.61..5845.96 rows=20 width=27) (actual time=11.341..11.346 rows=15 loops=2)
+                          Group Key: t.track_id
+                          Buffers: shared hit=3570
+                          ->  Sort  (cost=5845.61..5845.66 rows=20 width=19) (actual time=11.337..11.338 rows=20 loops=2)
+                                Sort Key: t.track_id
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=3570
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Nested Loop  (cost=1400.11..5845.18 rows=20 width=19) (actual time=10.528..11.326 rows=20 loops=2)
+                                      Join Filter: (ta.track_id = t.track_id)
+                                      Buffers: shared hit=3563
+                                      ->  Hash Join  (cost=1399.81..5833.24 rows=20 width=8) (actual time=10.517..11.265 rows=20 loops=2)
+                                            Hash Cond: (s.track_id = ta.track_id)
+                                            Buffers: shared hit=3445
+                                            ->  Parallel Seq Scan on streams s  (cost=0.00..4414.24 rows=7312 width=4) (actual time=7.910..8.419 rows=6410 loops=2)
+                                                  Filter: (started_at >= '2026-06-03 00:00:00+05:30'::timestamp with time zone)
+                                                  Rows Removed by Filter: 118590
+                                                  Buffers: shared hit=2576
+                                            ->  Hash  (cost=1397.61..1397.61 rows=176 width=4) (actual time=2.555..2.555 rows=160 loops=2)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 14kB
+                                                  Buffers: shared hit=858
+                                                  ->  Seq Scan on track_artists ta  (cost=0.00..1397.61 rows=176 width=4) (actual time=0.071..2.537 rows=160 loops=2)
+                                                        Filter: (artist_id = 33)
+                                                        Rows Removed by Filter: 77329
+                                                        Buffers: shared hit=858
+                                      ->  Index Scan using pk_tracks on tracks t  (cost=0.29..0.58 rows=1 width=19) (actual time=0.003..0.003 rows=1 loops=39)
+                                            Index Cond: (track_id = s.track_id)
+                                            Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=235
+Planning Time: 1.375 ms
+Execution Time: 14.294 ms
+=== R01 run 3 ===
+Limit  (cost=6849.40..6849.42 rows=10 width=27) (actual time=12.257..13.388 rows=10 loops=1)
+  Buffers: shared hit=3573
+  ->  Sort  (cost=6849.40..6849.48 rows=34 width=27) (actual time=12.256..13.386 rows=10 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3573
+        ->  Finalize GroupAggregate  (cost=6845.62..6848.66 rows=34 width=27) (actual time=12.229..13.373 rows=28 loops=1)
+              Group Key: t.track_id
+              Buffers: shared hit=3570
+              ->  Gather Merge  (cost=6845.62..6848.22 rows=20 width=27) (actual time=12.225..13.363 rows=32 loops=1)
+                    Workers Planned: 1
+                    Workers Launched: 1
+                    Buffers: shared hit=3570
+                    ->  Partial GroupAggregate  (cost=5845.61..5845.96 rows=20 width=27) (actual time=10.378..10.384 rows=16 loops=2)
+                          Group Key: t.track_id
+                          Buffers: shared hit=3570
+                          ->  Sort  (cost=5845.61..5845.66 rows=20 width=19) (actual time=10.373..10.374 rows=20 loops=2)
+                                Sort Key: t.track_id
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=3570
+                                Worker 0:  Sort Method: quicksort  Memory: 25kB
+                                ->  Nested Loop  (cost=1400.11..5845.18 rows=20 width=19) (actual time=9.470..10.360 rows=20 loops=2)
+                                      Join Filter: (ta.track_id = t.track_id)
+                                      Buffers: shared hit=3563
+                                      ->  Hash Join  (cost=1399.81..5833.24 rows=20 width=8) (actual time=9.456..10.293 rows=20 loops=2)
+                                            Hash Cond: (s.track_id = ta.track_id)
+                                            Buffers: shared hit=3445
+                                            ->  Parallel Seq Scan on streams s  (cost=0.00..4414.24 rows=7312 width=4) (actual time=7.235..7.815 rows=6410 loops=2)
+                                                  Filter: (started_at >= '2026-06-03 00:00:00+05:30'::timestamp with time zone)
+                                                  Rows Removed by Filter: 118590
+                                                  Buffers: shared hit=2576
+                                            ->  Hash  (cost=1397.61..1397.61 rows=176 width=4) (actual time=2.158..2.158 rows=160 loops=2)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 14kB
+                                                  Buffers: shared hit=858
+                                                  ->  Seq Scan on track_artists ta  (cost=0.00..1397.61 rows=176 width=4) (actual time=0.066..2.147 rows=160 loops=2)
+                                                        Filter: (artist_id = 33)
+                                                        Rows Removed by Filter: 77329
+                                                        Buffers: shared hit=858
+                                      ->  Index Scan using pk_tracks on tracks t  (cost=0.29..0.58 rows=1 width=19) (actual time=0.003..0.003 rows=1 loops=39)
+                                            Index Cond: (track_id = s.track_id)
+                                            Buffers: shared hit=118
+Planning:
+  Buffers: shared hit=235
+Planning Time: 0.783 ms
+Execution Time: 13.475 ms

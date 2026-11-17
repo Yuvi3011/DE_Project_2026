@@ -1,0 +1,51 @@
+=== R22 run 1 ===
+Sort  (cost=4660.09..4701.79 rows=16678 width=16) (actual time=31.398..31.439 rows=1800 loops=1)
+  Sort Key: (count(*)) DESC, playlist_id
+  Sort Method: quicksort  Memory: 105kB
+  Buffers: shared hit=771, temp read=143 written=306
+  ->  HashAggregate  (cost=2865.07..3490.50 rows=16678 width=16) (actual time=20.248..31.057 rows=1800 loops=1)
+        Group Key: playlist_id, track_id
+        Filter: (count(*) > 1)
+        Batches: 5  Memory Usage: 8241kB  Disk Usage: 1624kB
+        Rows Removed by Filter: 116404
+        Buffers: shared hit=765, temp read=143 written=306
+        ->  Seq Scan on playlist_tracks  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.003..3.645 rows=120004 loops=1)
+              Buffers: shared hit=765
+Planning:
+  Buffers: shared hit=83
+Planning Time: 0.139 ms
+Execution Time: 32.488 ms
+=== R22 run 2 ===
+Sort  (cost=4660.09..4701.79 rows=16678 width=16) (actual time=27.519..27.553 rows=1800 loops=1)
+  Sort Key: (count(*)) DESC, playlist_id
+  Sort Method: quicksort  Memory: 105kB
+  Buffers: shared hit=771, temp read=143 written=306
+  ->  HashAggregate  (cost=2865.07..3490.50 rows=16678 width=16) (actual time=17.883..27.244 rows=1800 loops=1)
+        Group Key: playlist_id, track_id
+        Filter: (count(*) > 1)
+        Batches: 5  Memory Usage: 8241kB  Disk Usage: 1624kB
+        Rows Removed by Filter: 116404
+        Buffers: shared hit=765, temp read=143 written=306
+        ->  Seq Scan on playlist_tracks  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.004..3.294 rows=120004 loops=1)
+              Buffers: shared hit=765
+Planning:
+  Buffers: shared hit=83
+Planning Time: 0.134 ms
+Execution Time: 28.576 ms
+=== R22 run 3 ===
+Sort  (cost=4660.09..4701.79 rows=16678 width=16) (actual time=25.554..25.583 rows=1800 loops=1)
+  Sort Key: (count(*)) DESC, playlist_id
+  Sort Method: quicksort  Memory: 105kB
+  Buffers: shared hit=771, temp read=143 written=306
+  ->  HashAggregate  (cost=2865.07..3490.50 rows=16678 width=16) (actual time=16.190..25.291 rows=1800 loops=1)
+        Group Key: playlist_id, track_id
+        Filter: (count(*) > 1)
+        Batches: 5  Memory Usage: 8241kB  Disk Usage: 1624kB
+        Rows Removed by Filter: 116404
+        Buffers: shared hit=765, temp read=143 written=306
+        ->  Seq Scan on playlist_tracks  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.005..3.020 rows=120004 loops=1)
+              Buffers: shared hit=765
+Planning:
+  Buffers: shared hit=83
+Planning Time: 0.138 ms
+Execution Time: 26.091 ms
