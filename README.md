@@ -744,3 +744,102 @@ WHERE s.artist_id = ar.artist_id;
 DELETE FROM playlist_tracks
 WHERE track_id IN (SELECT track_id FROM tracks WHERE album_id = (SELECT album_id FROM tracks WHERE track_id = 1389));
 ```
+---
+
+## Database Workflow & Reproducibility
+
+This section describes the local workflow for setting up the Spotify database, importing the provided dataset, and running performance benchmarks.
+
+### 1. Prerequisites
+
+Make sure the following tools are installed:
+
+- PostgreSQL 15 or newer
+- `psql` command-line client
+- Git
+- A terminal with access to the project directory
+
+### 2. Prepare the Dataset
+
+Extract the provided dataset from the project root:
+
+```bash
+unzip seed_data.zip
+```
+
+This creates the `seed_data/` directory containing the CSV files required for database initialization.
+
+### 3. Create the Database
+
+Create a dedicated PostgreSQL database:
+
+```bash
+createdb spotify_db
+```
+
+Verify the connection:
+
+```bash
+psql -d spotify_db
+```
+
+### 4. Initialize the Database Schema
+
+Run the schema creation script from the project root:
+
+```bash
+psql -d spotify_db -f sql/01_schema.sql
+```
+
+This initializes the `spotify` schema and creates the required database tables and constraints.
+
+### 5. Import the Dataset
+
+Load the CSV files using the provided SQL loading script:
+
+```bash
+psql -d spotify_db -f sql/02_load_data.sql
+```
+
+After loading, verify the imported records using SQL queries and compare the row counts against the expected dataset.
+
+### 6. Run Baseline Benchmarks
+
+Execute the benchmark script:
+
+```bash
+chmod +x benchmarks/run_benchmark.sh
+
+./benchmarks/run_benchmark.sh spotify_db baseline
+```
+
+The benchmark process measures query execution performance and stores the results in:
+
+```text
+benchmarks/results/baseline/
+```
+
+### 7. Analyze Performance
+
+Use PostgreSQL execution plans to understand query performance:
+
+```sql
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM spotify.tracks;
+```
+
+Review execution time, scan types, and buffer usage to identify potential optimization opportunities.
+
+### 8. Data Management Guidelines
+
+- Keep the original workload queries unchanged.
+- Do not commit extracted CSV datasets to GitHub.
+- Store benchmark results separately for baseline and optimized runs.
+- Document database design decisions and optimization techniques.
+- Ensure performance measurements are based on actual execution results.
+
+### 9. Project Reproducibility
+
+All database setup, loading, and benchmarking operations should be performed from the repository root directory to maintain consistent file paths and reproducible results.
+
+---
