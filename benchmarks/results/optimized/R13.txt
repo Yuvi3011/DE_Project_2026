@@ -1,0 +1,51 @@
+=== R13 run 1 ===
+Hash Right Anti Join  (cost=259.96..7807.53 rows=2194 width=24) (actual time=30.912..31.065 rows=1891 loops=1)
+  Hash Cond: (s.playlist_id = p.playlist_id)
+  Buffers: shared hit=2657
+  ->  Seq Scan on streams s  (cost=0.00..5076.00 rows=250000 width=4) (actual time=0.020..9.254 rows=250000 loops=1)
+        Buffers: shared hit=2576
+  ->  Hash  (cost=181.00..181.00 rows=6317 width=24) (actual time=1.885..1.886 rows=6317 loops=1)
+        Buckets: 8192  Batches: 1  Memory Usage: 423kB
+        Buffers: shared hit=81
+        ->  Seq Scan on playlists p  (cost=0.00..181.00 rows=6317 width=24) (actual time=0.019..0.984 rows=6317 loops=1)
+              Filter: is_public
+              Rows Removed by Filter: 3683
+              Buffers: shared hit=81
+Planning:
+  Buffers: shared hit=304 read=2
+Planning Time: 1.787 ms
+Execution Time: 31.196 ms
+=== R13 run 2 ===
+Hash Right Anti Join  (cost=259.96..7807.53 rows=2194 width=24) (actual time=22.394..22.541 rows=1891 loops=1)
+  Hash Cond: (s.playlist_id = p.playlist_id)
+  Buffers: shared hit=2657
+  ->  Seq Scan on streams s  (cost=0.00..5076.00 rows=250000 width=4) (actual time=0.004..6.923 rows=250000 loops=1)
+        Buffers: shared hit=2576
+  ->  Hash  (cost=181.00..181.00 rows=6317 width=24) (actual time=1.201..1.201 rows=6317 loops=1)
+        Buckets: 8192  Batches: 1  Memory Usage: 423kB
+        Buffers: shared hit=81
+        ->  Seq Scan on playlists p  (cost=0.00..181.00 rows=6317 width=24) (actual time=0.003..0.631 rows=6317 loops=1)
+              Filter: is_public
+              Rows Removed by Filter: 3683
+              Buffers: shared hit=81
+Planning:
+  Buffers: shared hit=306
+Planning Time: 0.388 ms
+Execution Time: 22.629 ms
+=== R13 run 3 ===
+Hash Right Anti Join  (cost=259.96..7807.53 rows=2194 width=24) (actual time=21.695..21.812 rows=1891 loops=1)
+  Hash Cond: (s.playlist_id = p.playlist_id)
+  Buffers: shared hit=2657
+  ->  Seq Scan on streams s  (cost=0.00..5076.00 rows=250000 width=4) (actual time=0.003..6.919 rows=250000 loops=1)
+        Buffers: shared hit=2576
+  ->  Hash  (cost=181.00..181.00 rows=6317 width=24) (actual time=0.711..0.712 rows=6317 loops=1)
+        Buckets: 8192  Batches: 1  Memory Usage: 423kB
+        Buffers: shared hit=81
+        ->  Seq Scan on playlists p  (cost=0.00..181.00 rows=6317 width=24) (actual time=0.004..0.391 rows=6317 loops=1)
+              Filter: is_public
+              Rows Removed by Filter: 3683
+              Buffers: shared hit=81
+Planning:
+  Buffers: shared hit=306
+Planning Time: 0.462 ms
+Execution Time: 21.895 ms

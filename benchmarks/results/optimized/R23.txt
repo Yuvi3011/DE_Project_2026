@@ -1,0 +1,78 @@
+=== R23 run 1 ===
+Limit  (cost=16268.98..16271.21 rows=25 width=28) (actual time=26.886..26.888 rows=25 loops=1)
+  Buffers: shared hit=2643 read=510
+  InitPlan 1
+    ->  Limit  (cost=16268.43..16268.51 rows=1 width=16) (actual time=26.858..26.859 rows=1 loops=1)
+          Buffers: shared hit=2631 read=509
+          ->  Incremental Sort  (cost=0.47..20335.42 rows=250000 width=16) (actual time=0.015..23.463 rows=200001 loops=1)
+                Sort Key: streams_1.started_at DESC, streams_1.stream_id DESC
+                Presorted Key: streams_1.started_at
+                Full-sort Groups: 6251  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=2631 read=509
+                ->  Index Scan Backward using idx_streams_started_at on streams streams_1  (cost=0.42..9085.42 rows=250000 width=16) (actual time=0.008..14.042 rows=200002 loops=1)
+                      Buffers: shared hit=2631 read=509
+  ->  Incremental Sort  (cost=0.47..7407.40 rows=83333 width=28) (actual time=26.886..26.886 rows=25 loops=1)
+        Sort Key: streams.started_at DESC, streams.stream_id DESC
+        Presorted Key: streams.started_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=2643 read=510
+        ->  Index Scan Backward using idx_streams_started_at on streams  (cost=0.42..3657.41 rows=83333 width=28) (actual time=26.875..26.877 rows=26 loops=1)
+              Index Cond: (started_at <= (InitPlan 1).col1)
+              Filter: (ROW(started_at, stream_id) <= ROW((InitPlan 1).col1, (InitPlan 1).col2))
+              Buffers: shared hit=2634 read=510
+Planning:
+  Buffers: shared hit=162
+Planning Time: 0.245 ms
+Execution Time: 26.907 ms
+=== R23 run 2 ===
+Limit  (cost=16268.98..16271.21 rows=25 width=28) (actual time=25.387..25.388 rows=25 loops=1)
+  Buffers: shared hit=3153
+  InitPlan 1
+    ->  Limit  (cost=16268.43..16268.51 rows=1 width=16) (actual time=25.363..25.363 rows=1 loops=1)
+          Buffers: shared hit=3140
+          ->  Incremental Sort  (cost=0.47..20335.42 rows=250000 width=16) (actual time=0.015..22.085 rows=200001 loops=1)
+                Sort Key: streams_1.started_at DESC, streams_1.stream_id DESC
+                Presorted Key: streams_1.started_at
+                Full-sort Groups: 6251  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=3140
+                ->  Index Scan Backward using idx_streams_started_at on streams streams_1  (cost=0.42..9085.42 rows=250000 width=16) (actual time=0.007..12.949 rows=200002 loops=1)
+                      Buffers: shared hit=3140
+  ->  Incremental Sort  (cost=0.47..7407.40 rows=83333 width=28) (actual time=25.386..25.387 rows=25 loops=1)
+        Sort Key: streams.started_at DESC, streams.stream_id DESC
+        Presorted Key: streams.started_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=3153
+        ->  Index Scan Backward using idx_streams_started_at on streams  (cost=0.42..3657.41 rows=83333 width=28) (actual time=25.377..25.378 rows=26 loops=1)
+              Index Cond: (started_at <= (InitPlan 1).col1)
+              Filter: (ROW(started_at, stream_id) <= ROW((InitPlan 1).col1, (InitPlan 1).col2))
+              Buffers: shared hit=3144
+Planning:
+  Buffers: shared hit=162
+Planning Time: 0.237 ms
+Execution Time: 25.407 ms
+=== R23 run 3 ===
+Limit  (cost=16268.98..16271.21 rows=25 width=28) (actual time=25.535..25.537 rows=25 loops=1)
+  Buffers: shared hit=3153
+  InitPlan 1
+    ->  Limit  (cost=16268.43..16268.51 rows=1 width=16) (actual time=25.512..25.512 rows=1 loops=1)
+          Buffers: shared hit=3140
+          ->  Incremental Sort  (cost=0.47..20335.42 rows=250000 width=16) (actual time=0.024..22.199 rows=200001 loops=1)
+                Sort Key: streams_1.started_at DESC, streams_1.stream_id DESC
+                Presorted Key: streams_1.started_at
+                Full-sort Groups: 6251  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=3140
+                ->  Index Scan Backward using idx_streams_started_at on streams streams_1  (cost=0.42..9085.42 rows=250000 width=16) (actual time=0.015..13.012 rows=200002 loops=1)
+                      Buffers: shared hit=3140
+  ->  Incremental Sort  (cost=0.47..7407.40 rows=83333 width=28) (actual time=25.535..25.536 rows=25 loops=1)
+        Sort Key: streams.started_at DESC, streams.stream_id DESC
+        Presorted Key: streams.started_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=3153
+        ->  Index Scan Backward using idx_streams_started_at on streams  (cost=0.42..3657.41 rows=83333 width=28) (actual time=25.525..25.527 rows=26 loops=1)
+              Index Cond: (started_at <= (InitPlan 1).col1)
+              Filter: (ROW(started_at, stream_id) <= ROW((InitPlan 1).col1, (InitPlan 1).col2))
+              Buffers: shared hit=3144
+Planning:
+  Buffers: shared hit=162
+Planning Time: 0.243 ms
+Execution Time: 25.561 ms

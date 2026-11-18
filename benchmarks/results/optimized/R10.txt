@@ -1,0 +1,45 @@
+=== R10 run 1 ===
+GroupAggregate  (cost=1508.31..1809.54 rows=13388 width=18) (actual time=7.775..9.834 rows=180 loops=1)
+  Group Key: ((started_at)::date), platform
+  Buffers: shared hit=185 read=3
+  ->  Sort  (cost=1508.31..1541.78 rows=13388 width=10) (actual time=7.742..8.341 rows=13736 loops=1)
+        Sort Key: ((started_at)::date), platform
+        Sort Method: quicksort  Memory: 773kB
+        Buffers: shared hit=185 read=3
+        ->  Index Scan using idx_streams_started_at on streams  (cost=0.42..590.65 rows=13388 width=10) (actual time=0.027..3.210 rows=13736 loops=1)
+              Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Buffers: shared hit=179 read=3
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.619 ms
+Execution Time: 9.902 ms
+=== R10 run 2 ===
+GroupAggregate  (cost=1508.31..1809.54 rows=13388 width=18) (actual time=12.552..14.903 rows=180 loops=1)
+  Group Key: ((started_at)::date), platform
+  Buffers: shared hit=188
+  ->  Sort  (cost=1508.31..1541.78 rows=13388 width=10) (actual time=12.503..13.164 rows=13736 loops=1)
+        Sort Key: ((started_at)::date), platform
+        Sort Method: quicksort  Memory: 773kB
+        Buffers: shared hit=188
+        ->  Index Scan using idx_streams_started_at on streams  (cost=0.42..590.65 rows=13388 width=10) (actual time=0.035..5.531 rows=13736 loops=1)
+              Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Buffers: shared hit=182
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.843 ms
+Execution Time: 15.027 ms
+=== R10 run 3 ===
+GroupAggregate  (cost=1508.31..1809.54 rows=13388 width=18) (actual time=9.038..10.907 rows=180 loops=1)
+  Group Key: ((started_at)::date), platform
+  Buffers: shared hit=188
+  ->  Sort  (cost=1508.31..1541.78 rows=13388 width=10) (actual time=8.997..9.510 rows=13736 loops=1)
+        Sort Key: ((started_at)::date), platform
+        Sort Method: quicksort  Memory: 773kB
+        Buffers: shared hit=188
+        ->  Index Scan using idx_streams_started_at on streams  (cost=0.42..590.65 rows=13388 width=10) (actual time=0.026..3.843 rows=13736 loops=1)
+              Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Buffers: shared hit=182
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.782 ms
+Execution Time: 10.977 ms

@@ -1,0 +1,84 @@
+=== R14 run 1 ===
+Limit  (cost=3280.46..3280.58 rows=50 width=36) (actual time=9.445..9.449 rows=50 loops=1)
+  Buffers: shared hit=853 read=4
+  ->  Sort  (cost=3280.46..3282.88 rows=968 width=36) (actual time=9.444..9.446 rows=50 loops=1)
+        Sort Key: (count(DISTINCT pt.added_by_user_id)) DESC, (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 31kB
+        Buffers: shared hit=853 read=4
+        ->  GroupAggregate  (cost=3122.46..3248.30 rows=968 width=36) (actual time=8.602..9.356 rows=968 loops=1)
+              Group Key: p.playlist_id
+              Buffers: shared hit=850 read=4
+              ->  Sort  (cost=3122.46..3151.50 rows=11616 width=24) (actual time=8.595..8.823 rows=11478 loops=1)
+                    Sort Key: p.playlist_id, pt.added_by_user_id
+                    Sort Method: quicksort  Memory: 868kB
+                    Buffers: shared hit=850 read=4
+                    ->  Hash Join  (cost=57.97..2338.16 rows=11616 width=24) (actual time=0.220..7.438 rows=11478 loops=1)
+                          Hash Cond: (pt.playlist_id = p.playlist_id)
+                          Buffers: shared hit=847 read=4
+                          ->  Seq Scan on playlist_tracks pt  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.003..3.047 rows=120004 loops=1)
+                                Buffers: shared hit=765
+                          ->  Hash  (cost=45.87..45.87 rows=968 width=20) (actual time=0.211..0.211 rows=968 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 58kB
+                                Buffers: shared hit=82 read=4
+                                ->  Index Scan using idx_playlists_collab on playlists p  (cost=0.28..45.87 rows=968 width=20) (actual time=0.008..0.169 rows=968 loops=1)
+                                      Buffers: shared hit=82 read=4
+Planning:
+  Buffers: shared hit=188 read=5
+Planning Time: 0.365 ms
+Execution Time: 9.480 ms
+=== R14 run 2 ===
+Limit  (cost=3280.46..3280.58 rows=50 width=36) (actual time=8.833..8.838 rows=50 loops=1)
+  Buffers: shared hit=857
+  ->  Sort  (cost=3280.46..3282.88 rows=968 width=36) (actual time=8.832..8.833 rows=50 loops=1)
+        Sort Key: (count(DISTINCT pt.added_by_user_id)) DESC, (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 31kB
+        Buffers: shared hit=857
+        ->  GroupAggregate  (cost=3122.46..3248.30 rows=968 width=36) (actual time=8.030..8.745 rows=968 loops=1)
+              Group Key: p.playlist_id
+              Buffers: shared hit=854
+              ->  Sort  (cost=3122.46..3151.50 rows=11616 width=24) (actual time=8.022..8.235 rows=11478 loops=1)
+                    Sort Key: p.playlist_id, pt.added_by_user_id
+                    Sort Method: quicksort  Memory: 868kB
+                    Buffers: shared hit=854
+                    ->  Hash Join  (cost=57.97..2338.16 rows=11616 width=24) (actual time=0.218..6.780 rows=11478 loops=1)
+                          Hash Cond: (pt.playlist_id = p.playlist_id)
+                          Buffers: shared hit=851
+                          ->  Seq Scan on playlist_tracks pt  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.003..2.792 rows=120004 loops=1)
+                                Buffers: shared hit=765
+                          ->  Hash  (cost=45.87..45.87 rows=968 width=20) (actual time=0.208..0.209 rows=968 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 58kB
+                                Buffers: shared hit=86
+                                ->  Index Scan using idx_playlists_collab on playlists p  (cost=0.28..45.87 rows=968 width=20) (actual time=0.006..0.161 rows=968 loops=1)
+                                      Buffers: shared hit=86
+Planning:
+  Buffers: shared hit=193
+Planning Time: 0.420 ms
+Execution Time: 8.874 ms
+=== R14 run 3 ===
+Limit  (cost=3280.46..3280.58 rows=50 width=36) (actual time=10.364..10.367 rows=50 loops=1)
+  Buffers: shared hit=857
+  ->  Sort  (cost=3280.46..3282.88 rows=968 width=36) (actual time=10.363..10.366 rows=50 loops=1)
+        Sort Key: (count(DISTINCT pt.added_by_user_id)) DESC, (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 31kB
+        Buffers: shared hit=857
+        ->  GroupAggregate  (cost=3122.46..3248.30 rows=968 width=36) (actual time=9.397..10.259 rows=968 loops=1)
+              Group Key: p.playlist_id
+              Buffers: shared hit=854
+              ->  Sort  (cost=3122.46..3151.50 rows=11616 width=24) (actual time=9.390..9.645 rows=11478 loops=1)
+                    Sort Key: p.playlist_id, pt.added_by_user_id
+                    Sort Method: quicksort  Memory: 868kB
+                    Buffers: shared hit=854
+                    ->  Hash Join  (cost=57.97..2338.16 rows=11616 width=24) (actual time=0.236..8.013 rows=11478 loops=1)
+                          Hash Cond: (pt.playlist_id = p.playlist_id)
+                          Buffers: shared hit=851
+                          ->  Seq Scan on playlist_tracks pt  (cost=0.00..1965.04 rows=120004 width=8) (actual time=0.003..3.208 rows=120004 loops=1)
+                                Buffers: shared hit=765
+                          ->  Hash  (cost=45.87..45.87 rows=968 width=20) (actual time=0.227..0.227 rows=968 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 58kB
+                                Buffers: shared hit=86
+                                ->  Index Scan using idx_playlists_collab on playlists p  (cost=0.28..45.87 rows=968 width=20) (actual time=0.006..0.167 rows=968 loops=1)
+                                      Buffers: shared hit=86
+Planning:
+  Buffers: shared hit=193
+Planning Time: 0.374 ms
+Execution Time: 10.403 ms

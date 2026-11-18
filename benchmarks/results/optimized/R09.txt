@@ -1,0 +1,114 @@
+=== R09 run 1 ===
+Limit  (cost=47.72..47.73 rows=1 width=54) (actual time=0.379..0.381 rows=4 loops=1)
+  Buffers: shared hit=42
+  ->  Sort  (cost=47.72..47.73 rows=1 width=54) (actual time=0.379..0.380 rows=4 loops=1)
+        Sort Key: (round(((sum(s.ms_played))::numeric / 60000.0), 1)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=42
+        ->  GroupAggregate  (cost=47.68..47.71 rows=1 width=54) (actual time=0.353..0.358 rows=4 loops=1)
+              Group Key: ta.artist_id, ar.artist_name
+              Buffers: shared hit=39
+              ->  Sort  (cost=47.68..47.69 rows=1 width=26) (actual time=0.346..0.347 rows=4 loops=1)
+                    Sort Key: ta.artist_id, ar.artist_name
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=39
+                    ->  Nested Loop  (cost=5.06..47.67 rows=1 width=26) (actual time=0.242..0.324 rows=4 loops=1)
+                          Buffers: shared hit=33
+                          ->  Nested Loop  (cost=4.78..47.37 rows=1 width=8) (actual time=0.230..0.293 rows=4 loops=1)
+                                Buffers: shared hit=21
+                                ->  Bitmap Heap Scan on streams s  (cost=4.49..39.05 rows=1 width=8) (actual time=0.211..0.241 rows=4 loops=1)
+                                      Recheck Cond: (user_id = 1038)
+                                      Filter: (EXTRACT(year FROM started_at) = '2025'::numeric)
+                                      Rows Removed by Filter: 2
+                                      Heap Blocks: exact=6
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on idx_streams_user_started  (cost=0.00..4.49 rows=9 width=0) (actual time=0.012..0.013 rows=6 loops=1)
+                                            Index Cond: (user_id = 1038)
+                                            Buffers: shared hit=3
+                                ->  Index Scan using pk_track_artists on track_artists ta  (cost=0.29..8.31 rows=1 width=8) (actual time=0.012..0.012 rows=1 loops=4)
+                                      Index Cond: (track_id = s.track_id)
+                                      Filter: ((role)::text = 'PRIMARY'::text)
+                                      Buffers: shared hit=12
+                          ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.30 rows=1 width=22) (actual time=0.006..0.006 rows=1 loops=4)
+                                Index Cond: (artist_id = ta.artist_id)
+                                Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=292
+Planning Time: 1.537 ms
+Execution Time: 0.447 ms
+=== R09 run 2 ===
+Limit  (cost=47.72..47.73 rows=1 width=54) (actual time=0.163..0.165 rows=4 loops=1)
+  Buffers: shared hit=42
+  ->  Sort  (cost=47.72..47.73 rows=1 width=54) (actual time=0.163..0.164 rows=4 loops=1)
+        Sort Key: (round(((sum(s.ms_played))::numeric / 60000.0), 1)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=42
+        ->  GroupAggregate  (cost=47.68..47.71 rows=1 width=54) (actual time=0.137..0.140 rows=4 loops=1)
+              Group Key: ta.artist_id, ar.artist_name
+              Buffers: shared hit=39
+              ->  Sort  (cost=47.68..47.69 rows=1 width=26) (actual time=0.130..0.131 rows=4 loops=1)
+                    Sort Key: ta.artist_id, ar.artist_name
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=39
+                    ->  Nested Loop  (cost=5.06..47.67 rows=1 width=26) (actual time=0.050..0.108 rows=4 loops=1)
+                          Buffers: shared hit=33
+                          ->  Nested Loop  (cost=4.78..47.37 rows=1 width=8) (actual time=0.043..0.087 rows=4 loops=1)
+                                Buffers: shared hit=21
+                                ->  Bitmap Heap Scan on streams s  (cost=4.49..39.05 rows=1 width=8) (actual time=0.034..0.054 rows=4 loops=1)
+                                      Recheck Cond: (user_id = 1038)
+                                      Filter: (EXTRACT(year FROM started_at) = '2025'::numeric)
+                                      Rows Removed by Filter: 2
+                                      Heap Blocks: exact=6
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on idx_streams_user_started  (cost=0.00..4.49 rows=9 width=0) (actual time=0.011..0.011 rows=6 loops=1)
+                                            Index Cond: (user_id = 1038)
+                                            Buffers: shared hit=3
+                                ->  Index Scan using pk_track_artists on track_artists ta  (cost=0.29..8.31 rows=1 width=8) (actual time=0.007..0.007 rows=1 loops=4)
+                                      Index Cond: (track_id = s.track_id)
+                                      Filter: ((role)::text = 'PRIMARY'::text)
+                                      Buffers: shared hit=12
+                          ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.30 rows=1 width=22) (actual time=0.005..0.005 rows=1 loops=4)
+                                Index Cond: (artist_id = ta.artist_id)
+                                Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=292
+Planning Time: 1.300 ms
+Execution Time: 0.218 ms
+=== R09 run 3 ===
+Limit  (cost=47.72..47.73 rows=1 width=54) (actual time=0.141..0.142 rows=4 loops=1)
+  Buffers: shared hit=42
+  ->  Sort  (cost=47.72..47.73 rows=1 width=54) (actual time=0.141..0.141 rows=4 loops=1)
+        Sort Key: (round(((sum(s.ms_played))::numeric / 60000.0), 1)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=42
+        ->  GroupAggregate  (cost=47.68..47.71 rows=1 width=54) (actual time=0.119..0.122 rows=4 loops=1)
+              Group Key: ta.artist_id, ar.artist_name
+              Buffers: shared hit=39
+              ->  Sort  (cost=47.68..47.69 rows=1 width=26) (actual time=0.114..0.115 rows=4 loops=1)
+                    Sort Key: ta.artist_id, ar.artist_name
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=39
+                    ->  Nested Loop  (cost=5.06..47.67 rows=1 width=26) (actual time=0.042..0.089 rows=4 loops=1)
+                          Buffers: shared hit=33
+                          ->  Nested Loop  (cost=4.78..47.37 rows=1 width=8) (actual time=0.036..0.072 rows=4 loops=1)
+                                Buffers: shared hit=21
+                                ->  Bitmap Heap Scan on streams s  (cost=4.49..39.05 rows=1 width=8) (actual time=0.028..0.045 rows=4 loops=1)
+                                      Recheck Cond: (user_id = 1038)
+                                      Filter: (EXTRACT(year FROM started_at) = '2025'::numeric)
+                                      Rows Removed by Filter: 2
+                                      Heap Blocks: exact=6
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on idx_streams_user_started  (cost=0.00..4.49 rows=9 width=0) (actual time=0.010..0.010 rows=6 loops=1)
+                                            Index Cond: (user_id = 1038)
+                                            Buffers: shared hit=3
+                                ->  Index Scan using pk_track_artists on track_artists ta  (cost=0.29..8.31 rows=1 width=8) (actual time=0.006..0.006 rows=1 loops=4)
+                                      Index Cond: (track_id = s.track_id)
+                                      Filter: ((role)::text = 'PRIMARY'::text)
+                                      Buffers: shared hit=12
+                          ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.30 rows=1 width=22) (actual time=0.004..0.004 rows=1 loops=4)
+                                Index Cond: (artist_id = ta.artist_id)
+                                Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=292
+Planning Time: 1.567 ms
+Execution Time: 0.198 ms

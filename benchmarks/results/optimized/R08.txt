@@ -1,0 +1,93 @@
+=== R08 run 1 ===
+Sort  (cost=1581.15..1582.65 rows=601 width=59) (actual time=1.944..1.951 rows=148 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=1473 read=28
+  ->  HashAggregate  (cost=1539.89..1553.41 rows=601 width=59) (actual time=1.833..1.896 rows=148 loops=1)
+        Group Key: t.track_id
+        Batches: 1  Memory Usage: 57kB
+        Buffers: shared hit=1470 read=28
+        ->  Nested Loop  (cost=6.27..1535.38 rows=601 width=20) (actual time=0.070..1.682 rows=510 loops=1)
+              Join Filter: (ta.track_id = s.track_id)
+              Buffers: shared hit=1470 read=28
+              ->  Nested Loop  (cost=5.85..1413.86 rows=163 width=23) (actual time=0.036..0.465 rows=160 loops=1)
+                    Buffers: shared hit=511
+                    ->  Bitmap Heap Scan on track_artists ta  (cost=5.56..323.33 rows=163 width=4) (actual time=0.024..0.101 rows=160 loops=1)
+                          Recheck Cond: (artist_id = 33)
+                          Heap Blocks: exact=29
+                          Buffers: shared hit=31
+                          ->  Bitmap Index Scan on idx_track_artists_artist  (cost=0.00..5.52 rows=163 width=0) (actual time=0.014..0.014 rows=160 loops=1)
+                                Index Cond: (artist_id = 33)
+                                Buffers: shared hit=2
+                    ->  Index Scan using pk_tracks on tracks t  (cost=0.29..6.69 rows=1 width=19) (actual time=0.002..0.002 rows=1 loops=160)
+                          Index Cond: (track_id = ta.track_id)
+                          Buffers: shared hit=480
+              ->  Index Scan using idx_streams_track_id on streams s  (cost=0.42..0.68 rows=5 width=5) (actual time=0.003..0.007 rows=3 loops=160)
+                    Index Cond: (track_id = t.track_id)
+                    Buffers: shared hit=959 read=28
+Planning:
+  Buffers: shared hit=360
+Planning Time: 1.512 ms
+Execution Time: 2.031 ms
+=== R08 run 2 ===
+Sort  (cost=1581.15..1582.65 rows=601 width=59) (actual time=1.793..1.799 rows=148 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=1501
+  ->  HashAggregate  (cost=1539.89..1553.41 rows=601 width=59) (actual time=1.700..1.750 rows=148 loops=1)
+        Group Key: t.track_id
+        Batches: 1  Memory Usage: 57kB
+        Buffers: shared hit=1498
+        ->  Nested Loop  (cost=6.27..1535.38 rows=601 width=20) (actual time=0.048..1.580 rows=510 loops=1)
+              Join Filter: (ta.track_id = s.track_id)
+              Buffers: shared hit=1498
+              ->  Nested Loop  (cost=5.85..1413.86 rows=163 width=23) (actual time=0.027..0.403 rows=160 loops=1)
+                    Buffers: shared hit=511
+                    ->  Bitmap Heap Scan on track_artists ta  (cost=5.56..323.33 rows=163 width=4) (actual time=0.019..0.096 rows=160 loops=1)
+                          Recheck Cond: (artist_id = 33)
+                          Heap Blocks: exact=29
+                          Buffers: shared hit=31
+                          ->  Bitmap Index Scan on idx_track_artists_artist  (cost=0.00..5.52 rows=163 width=0) (actual time=0.012..0.012 rows=160 loops=1)
+                                Index Cond: (artist_id = 33)
+                                Buffers: shared hit=2
+                    ->  Index Scan using pk_tracks on tracks t  (cost=0.29..6.69 rows=1 width=19) (actual time=0.002..0.002 rows=1 loops=160)
+                          Index Cond: (track_id = ta.track_id)
+                          Buffers: shared hit=480
+              ->  Index Scan using idx_streams_track_id on streams s  (cost=0.42..0.68 rows=5 width=5) (actual time=0.003..0.007 rows=3 loops=160)
+                    Index Cond: (track_id = t.track_id)
+                    Buffers: shared hit=987
+Planning:
+  Buffers: shared hit=360
+Planning Time: 1.468 ms
+Execution Time: 1.876 ms
+=== R08 run 3 ===
+Sort  (cost=1581.15..1582.65 rows=601 width=59) (actual time=1.899..1.905 rows=148 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=1501
+  ->  HashAggregate  (cost=1539.89..1553.41 rows=601 width=59) (actual time=1.781..1.848 rows=148 loops=1)
+        Group Key: t.track_id
+        Batches: 1  Memory Usage: 57kB
+        Buffers: shared hit=1498
+        ->  Nested Loop  (cost=6.27..1535.38 rows=601 width=20) (actual time=0.055..1.652 rows=510 loops=1)
+              Join Filter: (ta.track_id = s.track_id)
+              Buffers: shared hit=1498
+              ->  Nested Loop  (cost=5.85..1413.86 rows=163 width=23) (actual time=0.032..0.419 rows=160 loops=1)
+                    Buffers: shared hit=511
+                    ->  Bitmap Heap Scan on track_artists ta  (cost=5.56..323.33 rows=163 width=4) (actual time=0.020..0.096 rows=160 loops=1)
+                          Recheck Cond: (artist_id = 33)
+                          Heap Blocks: exact=29
+                          Buffers: shared hit=31
+                          ->  Bitmap Index Scan on idx_track_artists_artist  (cost=0.00..5.52 rows=163 width=0) (actual time=0.013..0.013 rows=160 loops=1)
+                                Index Cond: (artist_id = 33)
+                                Buffers: shared hit=2
+                    ->  Index Scan using pk_tracks on tracks t  (cost=0.29..6.69 rows=1 width=19) (actual time=0.002..0.002 rows=1 loops=160)
+                          Index Cond: (track_id = ta.track_id)
+                          Buffers: shared hit=480
+              ->  Index Scan using idx_streams_track_id on streams s  (cost=0.42..0.68 rows=5 width=5) (actual time=0.003..0.007 rows=3 loops=160)
+                    Index Cond: (track_id = t.track_id)
+                    Buffers: shared hit=987
+Planning:
+  Buffers: shared hit=360
+Planning Time: 1.777 ms
+Execution Time: 1.989 ms

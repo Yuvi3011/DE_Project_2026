@@ -1,0 +1,69 @@
+=== R11 run 1 ===
+Sort  (cost=30.52..30.52 rows=2 width=48) (actual time=0.201..0.202 rows=9 loops=1)
+  Sort Key: a.release_date DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=47 read=1
+  ->  Nested Loop  (cost=0.86..30.51 rows=2 width=48) (actual time=0.137..0.184 rows=9 loops=1)
+        Buffers: shared hit=44 read=1
+        ->  Nested Loop  (cost=0.58..29.29 rows=2 width=38) (actual time=0.128..0.156 rows=9 loops=1)
+              Buffers: shared hit=17 read=1
+              ->  Index Only Scan using pk_artist_follows on artist_follows f  (cost=0.29..4.35 rows=3 width=4) (actual time=0.110..0.111 rows=3 loops=1)
+                    Index Cond: (user_id = 1038)
+                    Heap Fetches: 0
+                    Buffers: shared hit=3
+              ->  Index Scan using idx_albums_artist_release on albums a  (cost=0.29..8.30 rows=1 width=34) (actual time=0.009..0.013 rows=3 loops=3)
+                    Index Cond: ((artist_id = f.artist_id) AND (release_date >= '2026-01-01'::date))
+                    Buffers: shared hit=14 read=1
+        ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.61 rows=1 width=22) (actual time=0.003..0.003 rows=1 loops=9)
+              Index Cond: (artist_id = a.artist_id)
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=339 read=6
+Planning Time: 1.610 ms
+Execution Time: 0.270 ms
+=== R11 run 2 ===
+Sort  (cost=30.52..30.52 rows=2 width=48) (actual time=0.113..0.114 rows=9 loops=1)
+  Sort Key: a.release_date DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=48
+  ->  Nested Loop  (cost=0.86..30.51 rows=2 width=48) (actual time=0.065..0.099 rows=9 loops=1)
+        Buffers: shared hit=45
+        ->  Nested Loop  (cost=0.58..29.29 rows=2 width=38) (actual time=0.058..0.078 rows=9 loops=1)
+              Buffers: shared hit=18
+              ->  Index Only Scan using pk_artist_follows on artist_follows f  (cost=0.29..4.35 rows=3 width=4) (actual time=0.045..0.046 rows=3 loops=1)
+                    Index Cond: (user_id = 1038)
+                    Heap Fetches: 0
+                    Buffers: shared hit=3
+              ->  Index Scan using idx_albums_artist_release on albums a  (cost=0.29..8.30 rows=1 width=34) (actual time=0.005..0.009 rows=3 loops=3)
+                    Index Cond: ((artist_id = f.artist_id) AND (release_date >= '2026-01-01'::date))
+                    Buffers: shared hit=15
+        ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.61 rows=1 width=22) (actual time=0.002..0.002 rows=1 loops=9)
+              Index Cond: (artist_id = a.artist_id)
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=345
+Planning Time: 1.232 ms
+Execution Time: 0.170 ms
+=== R11 run 3 ===
+Sort  (cost=30.52..30.52 rows=2 width=48) (actual time=0.234..0.236 rows=9 loops=1)
+  Sort Key: a.release_date DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=48
+  ->  Nested Loop  (cost=0.86..30.51 rows=2 width=48) (actual time=0.149..0.199 rows=9 loops=1)
+        Buffers: shared hit=45
+        ->  Nested Loop  (cost=0.58..29.29 rows=2 width=38) (actual time=0.135..0.165 rows=9 loops=1)
+              Buffers: shared hit=18
+              ->  Index Only Scan using pk_artist_follows on artist_follows f  (cost=0.29..4.35 rows=3 width=4) (actual time=0.100..0.101 rows=3 loops=1)
+                    Index Cond: (user_id = 1038)
+                    Heap Fetches: 0
+                    Buffers: shared hit=3
+              ->  Index Scan using idx_albums_artist_release on albums a  (cost=0.29..8.30 rows=1 width=34) (actual time=0.007..0.014 rows=3 loops=3)
+                    Index Cond: ((artist_id = f.artist_id) AND (release_date >= '2026-01-01'::date))
+                    Buffers: shared hit=15
+        ->  Index Scan using pk_artists on artists ar  (cost=0.28..0.61 rows=1 width=22) (actual time=0.003..0.003 rows=1 loops=9)
+              Index Cond: (artist_id = a.artist_id)
+              Buffers: shared hit=27
+Planning:
+  Buffers: shared hit=345
+Planning Time: 2.317 ms
+Execution Time: 0.361 ms
